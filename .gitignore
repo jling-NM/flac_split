@@ -1,0 +1,4 @@
+# ignore the flac file sample directory
+*sample_files*
+results
+
