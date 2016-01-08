@@ -7,6 +7,7 @@ As often happens when downloading from lazy people on Demonoid
 
 import sys,os,subprocess,re,glob
 
+cover_art_file = 'front.jpg'
 
 
 class track:
@@ -72,9 +73,9 @@ class cuesheet:
 
                 if line.startswith('FILE'):
                     self.audio_file = os.path.join(self.f_path,line.split("\"")[1])
-                    self.audio_file = self.audio_file.replace(' ','\\ ')
-                    self.audio_file = self.audio_file.replace('(','\\(')
-                    self.audio_file = self.audio_file.replace(')','\\)')
+                    self.audio_file = self.audio_file.replace(" ","\\ ")
+                    self.audio_file = self.audio_file.replace("(","\\(")
+                    self.audio_file = self.audio_file.replace(")","\\)")
                                     
                 if line.startswith('REM GENRE'):
                     self.tags['GENRE'] = line.split(' ')[2].strip()
@@ -100,7 +101,7 @@ class cuesheet:
                 if "PERFORMER" in line:
                     self.t.tags['ARTIST'] = line.split('"')[1]
                     
-                if "INDEX" in line:
+                if "INDEX 01" in line:
                     self.t.seek_index = '{0}:{1}.{2[0]}{2[1]}'.format(*line.split(' ')[6].split(':'))
 
                     self.tracks.append(self.t)
@@ -117,7 +118,7 @@ class cuesheet:
         Look for existing cover and provide a 500x500 pixel version into some
         Directory that can then also be added to the flac tag
         """
-        i_file = os.path.join(self.f_path,'cover.jpg')
+        i_file = os.path.join(self.f_path,cover_art_file)
         if os.path.isfile( i_file ):
             
             from PIL import Image
